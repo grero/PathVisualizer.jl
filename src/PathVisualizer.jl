@@ -19,7 +19,7 @@ function show_paths(X::Array{Float32,3})
       C[i,j] = RGBA(_colors[j].r, _colors[j].g, _colors[j].b, 1.0)
     end
   end
-  colors_ = Array(Signal,3)
+  colors_ = Array(Signal,nn)
   for i in 1:nn
     timesignal = loop(1:nbins)
     colors_[i] = map(timesignal)  do t
