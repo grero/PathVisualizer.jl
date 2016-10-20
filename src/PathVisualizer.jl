@@ -1,17 +1,6 @@
 module PathVisualizer
 using GLAbstraction, Colors, GeometryTypes, GLVisualize, Reactive
 
-function prepare_data(nbins, nn)
-  X = zeros(Float32, 3,nbins, nn)
-  X[:,1,:] = randn(3,nn)
-  for j in 1:3
-    for i in 2:nbins
-      X[:, i,j] = X[:,i-1,j] + 0.01*randn(3)
-    end
-  end
-  X
-end
-
 function show_paths(X::Array{Float32,3})
   window = glscreen()
   #convert to points
