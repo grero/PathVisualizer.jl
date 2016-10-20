@@ -1,6 +1,11 @@
 module PathVisualizer
 using GLAbstraction, Colors, GeometryTypes, GLVisualize, Reactive
+#TODO: Use dimensionality reduction to reduce from `ncells` to 3 dimensions
+"""
+Animate the paths specified by the matrix `X`. The fist dimension of `X` specifies the number of dimensions (only 3 works), the second the number of time points and the third the individual paths.
 
+	function show_paths(X::Array{Float32,3})
+"""
 function show_paths(X::Array{Float32,3})
   window = glscreen()
   #convert to points
