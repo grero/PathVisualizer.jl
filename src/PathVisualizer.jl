@@ -12,6 +12,14 @@ function show_paths{T<:RGB}(X::Array{Float32,3},colors::Array{T,1}=RGB[],fps=60)
   ncells, nbins, nn = size(X)
   Y = Array(Point3f0, nbins, nn)
   C = Array(RGBA{Float32},nbins,nn)
+	#center on the initial points
+	centroid = Vec3f0(-mean(X[:,1,:], 2)[:]...)
+	translation = translationmatrix(centroid)
+	#scale
+	mi = minimum(X,(2,3))[:]
+	mx = maximum(X,(2,3))[:]
+	doscale = scalematrix(Vec3f0(1.0/(mx[1]-mi[1]), 1.0/(mx[2]-mi[2]), 1.0/(mx[3]-mi[3])))
+	model = doscale*translation
 	if isempty(colors)
 		_colors = Colors.distinguishable_colors(nn)
 	else
@@ -38,7 +46,7 @@ function show_paths{T<:RGB}(X::Array{Float32,3},colors::Array{T,1}=RGB[],fps=60)
     end
   end
   for i in 1:nn
-    lines3d = visualize(Y[:,i], :lines, color=colors_[i])
+    lines3d = visualize(Y[:,i], :lines, color=colors_[i],model=model)
     _view(lines3d, window, camera=:perspective)
   end
   renderloop(window)
