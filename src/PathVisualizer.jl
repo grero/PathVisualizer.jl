@@ -64,23 +64,25 @@ function animate_points{T<:RGB}(X::Array{Float32,3},colors::Array{T,1}=RGB[],fps
 	doscale = scalematrix(Vec3f0(1.0/(mx[1]-mi[1]), 1.0/(mx[2]-mi[2]), 1.0/(mx[3]-mi[3])))
 	model = doscale*translation
   Y = Array(Point3f0, nbins, nn)
-  C = Array(RGBA{Float32},nbins,nn)
+  C = Array(RGBA{Float32},nn)
 	if isempty(colors)
 		_colors = Colors.distinguishable_colors(nn)
 	else
 		_colors = colors
 	end
+	for j in 1:nn
+  C[j] = RGBA(_colors[j].r, _colors[j].g, _colors[j].b, 1.0)
+	end
   for i in 1:nbins
     for j in 1:nn
       Y[i,j] = Point3f0(X[1,i,j], X[2, i,j], X[3, i, j])
-      C[i,j] = RGBA(_colors[j].r, _colors[j].g, _colors[j].b, 1.0)
     end
   end
 	timesignal = loop(1:nbins,fps)
 	points_ = map(timesignal) do t
 			Y[t,:]
     end
-	points3d = visualize((Circle, points_), color=C[1,:],model=model, scale=Vec3f0(0.05, 0.05, 0.05))
+	points3d = visualize((Circle, points_), color=C,model=model, scale=Vec3f0(0.05, 0.05, 0.05))
 	_view(points3d, window, camera=:perspective)
 	renderloop(window)
 end
