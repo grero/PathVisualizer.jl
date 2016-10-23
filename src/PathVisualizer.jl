@@ -80,8 +80,8 @@ function animate_points{T<:RGB}(X::Array{Float32,3},colors::Array{T,1}=RGB[],fps
 	points_ = map(timesignal) do t
 			Y[t,:]
     end
-		points3d = visualize((Circle, points_), color=C[1,:],model=model)
+	points3d = visualize((Circle, points_), color=C[1,:],model=model, scale=Vec3f0(0.05, 0.05, 0.05))
 	_view(points3d, window, camera=:perspective)
-  renderloop(window)
+	renderloop(window)
 end
 end #module
