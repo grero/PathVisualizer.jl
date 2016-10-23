@@ -13,6 +13,6 @@ function prepare_data(nbins, nn)
 end
 
 X = prepare_data(500,3)
-PathVisualizer.show_paths(X)
+PathVisualizer.animate_paths(X)
 
 

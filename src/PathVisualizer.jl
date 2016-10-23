@@ -6,7 +6,7 @@ Animate the paths specified by the matrix `X`. The fist dimension of `X` specifi
 
 	function show_paths(X::Array{Float32,3})
 """
-function show_paths{T<:RGB}(X::Array{Float32,3},colors::Array{T,1}=RGB[],fps=60)
+function animate_paths{T<:RGB}(X::Array{Float32,3},colors::Array{T,1}=RGB[],fps=60)
   window = glscreen()
   #convert to points
   ncells, nbins, nn = size(X)
