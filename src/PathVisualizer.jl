@@ -86,4 +86,14 @@ function animate_points{T<:RGB}(X::Array{Float32,3},colors::Array{T,1}=RGB[],fps
 	_view(points3d, window, camera=:perspective)
 	renderloop(window)
 end
+
+animate_points(X::Array{Float64,3}, args...) = animate_points(convert(Array{Float32,3}, X), args...)
+
+function animate_points(X::Array{Float64,3}, labels::Array{Int64,1}, fps)
+	ulabels = unique(labels)
+	nlabels = length(ulabels)
+	_colors = Colors.distinguishable_colors(nlabels)
+	animate_points(X, _colors[labels], fps)
+end
+
 end #module
